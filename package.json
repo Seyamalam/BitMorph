@@ -1,6 +1,6 @@
 {
-  "name": "nextjs-upload",
-  "version": "0.1.0",
+  "name": "bitmorph",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "dev": "next dev",

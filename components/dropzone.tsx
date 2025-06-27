@@ -230,13 +230,13 @@ export default function Dropzone() {
         {actions.map((action: Action, i: any) => (
           <div
             key={i}
-            className="relative flex flex-wrap items-center justify-between w-full px-4 py-4 space-y-2 border cursor-pointer lg:py-0 rounded-xl h-fit lg:h-20 lg:px-10 lg:flex-nowrap"
+            className="relative flex flex-wrap items-center justify-between w-full px-4 py-4 space-y-2 border border-border bg-card hover:bg-accent/50 cursor-pointer lg:py-0 rounded-xl h-fit lg:h-20 lg:px-10 lg:flex-nowrap transition-colors"
           >
             {!is_loaded && (
               <Skeleton className="absolute w-full h-full -ml-10 cursor-progress rounded-xl" />
             )}
             <div className="flex items-center gap-4">
-              <span className="text-2xl text-orange-600">
+              <span className="text-2xl text-primary">
                 {fileToIcon(action.file_type)}
               </span>
               <div className="flex items-center gap-1 w-96">
@@ -255,7 +255,7 @@ export default function Dropzone() {
                 <BiError />
               </Badge>
             ) : action.is_converted ? (
-              <Badge variant="default" className="flex gap-2 bg-green-500">
+              <Badge variant="default" className="flex gap-2 bg-success text-success-foreground">
                 <span>Done</span>
                 <MdDone />
               </Badge>
@@ -429,27 +429,48 @@ export default function Dropzone() {
       {({ getRootProps, getInputProps }) => (
         <div
           {...getRootProps()}
-          className="flex items-center justify-center border-2 border-dashed shadow-sm cursor-pointer bg-background h-72 lg:h-80 xl:h-96 rounded-3xl border-secondary"
+          className={`flex items-center justify-center border-2 border-dashed shadow-sm cursor-pointer bg-background h-72 lg:h-80 xl:h-96 rounded-3xl transition-all duration-300 ${
+            is_hover 
+              ? 'border-primary bg-primary/5 scale-105' 
+              : 'border-border hover:border-primary/50 hover:bg-accent/30'
+          }`}
         >
           <input {...getInputProps()} />
-          <div className="space-y-4 text-foreground">
+          <div className="space-y-6 text-foreground text-center">
             {is_hover ? (
               <>
-                <div className="flex justify-center text-6xl">
+                <div className="flex justify-center text-6xl text-primary animate-bounce">
                   <LuFileSymlink />
                 </div>
-                <h3 className="text-2xl font-medium text-center">
-                  Yes, right there
-                </h3>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold text-primary">
+                    Perfect! Drop them here
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Release to upload your files
+                  </p>
+                </div>
               </>
             ) : (
               <>
-                <div className="flex justify-center text-6xl">
+                <div className="flex justify-center text-6xl text-muted-foreground hover:text-primary transition-colors">
                   <FiUploadCloud />
                 </div>
-                <h3 className="text-2xl font-medium text-center">
-                  Click, or drop your files here
-                </h3>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold">
+                    Click or drag files here
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Support for images, videos, and audio files - processed 100% locally
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2 pt-2">
+                    <span className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded">JPG</span>
+                    <span className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded">PNG</span>
+                    <span className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded">MP4</span>
+                    <span className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded">MP3</span>
+                    <span className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded">+more</span>
+                  </div>
+                </div>
               </>
             )}
           </div>
